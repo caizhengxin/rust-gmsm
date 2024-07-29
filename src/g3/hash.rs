@@ -1,3 +1,7 @@
+#[cfg(feature = "alloc")]
+use alloc::{vec::Vec, vec};
+
+
 fn ff0(x: u32, y: u32, z: u32) -> u32 { x ^ y ^ z }
 
 fn ff1(x: u32, y: u32, z: u32) -> u32 { (x & y) | (x & z) | (y & z) }

@@ -1,14 +1,25 @@
-use num::bigint::{BigUint, ToBigInt};
+#[cfg(feature = "alloc")]
+use alloc::{string::String, vec::Vec, vec, boxed::Box};
+// use core::panic;
+use num::BigUint;
+use num::bigint::ToBigInt;
 use num_bigint_dig::{BigUint as BigUnitDig, ModInverse};
-use std::sync::{Once};
-use std::{mem};
+use core::sync::{Once};
+use core::mem;
 use num::{Num, Integer, ToPrimitive, FromPrimitive, BigInt};
-use std::ops::{Shl, Shr, Add, Mul, Sub, BitAnd};
-use std::cmp::Ordering;
+use core::ops::{Shl, Shr, Add, Mul, Sub, BitAnd};
+use core::cmp::Ordering;
 use lazy_static::lazy_static;
 use crate::g2::consts::*;
 use crate::utils::slice::*;
-use std::str::FromStr;
+use core::str::FromStr;
+use core::prelude::rust_2024::derive;
+use core::clone::Clone;
+use core::cmp::Ord;
+use core::convert::From;
+use core::iter::Iterator;
+use crate::alloc::string::ToString;
+
 
 lazy_static! {
     pub static ref CURVE_A: BigUint = BigUint::from_str_radix("FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000FFFFFFFFFFFFFFFC", 16).unwrap();

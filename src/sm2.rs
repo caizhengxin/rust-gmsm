@@ -1,7 +1,12 @@
+use core::clone::Clone;
 use crate::g2::p256::Sm2P256Curve;
 use crate::g2::subject::*;
 use crate::g2::consts::{C1C2C3, C1C3C2};
 use num::{BigUint, Num};
+use core::prelude::rust_2024::derive;
+#[cfg(feature = "alloc")]
+use alloc::string::String;
+use crate::alloc::string::ToString;
 
 #[derive(Clone)]
 pub struct Keypair {

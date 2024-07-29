@@ -1,3 +1,6 @@
+#[cfg(feature = "alloc")]
+use alloc::string::String;
+use core::convert::From;
 use crate::g3::digest::{Digest, SIZE};
 
 #[allow(dead_code)]

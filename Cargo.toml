@@ -9,9 +9,13 @@ license = "Apache-2.0"
 repository = "https://github.com/nfjBill/rust-gmsm"
 readme = "README.md"
 
+[features]
+alloc = []
+
 [dependencies]
-hex = "0.3"
-num-bigint-dig = "0.7.0"
-num = "0.4"
-lazy_static = "1.4.0"
-rand = "0.8.4"
+hex = { version = "0.4", default-features = false, features = ["alloc"] }
+num-bigint-dig = { version = "0.7.0", default-features = false }
+num = { version = "0.4", default-features = false, features = ["alloc"] }
+lazy_static = { version = "1.4", features = ["spin_no_std"] }
+rand = { version = "0", default-features = false }
+heapless = "0.8"

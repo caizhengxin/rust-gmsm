@@ -1,10 +1,16 @@
+use core::clone::Clone;
 use num::{BigUint, FromPrimitive, Integer};
 use crate::g2::p256::{Sm2P256Curve, CurveParams, CURVE_N};
 use crate::g2::consts::*;
 use crate::g3::digest::{sm3sum, Digest};
 use crate::utils::slice::*;
-use std::ops::{Sub, Add};
+use core::ops::{Sub, Add};
 use lazy_static::lazy_static;
+#[cfg(feature = "alloc")]
+use alloc::{string::String, vec::Vec, vec};
+use core::prelude::rust_2024::derive;
+use core::iter::Iterator;
+
 
 lazy_static! {
     static ref ONE: BigUint = BigUint::from_u64(1).unwrap();

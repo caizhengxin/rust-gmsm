@@ -1,3 +1,8 @@
+#[cfg(feature = "alloc")]
+use alloc::{vec::Vec, vec, string::String};
+use core::clone::Clone;
+use core::convert::From;
+use crate::alloc::string::ToString;
 use crate::g4::cipher::{sm4_ecb, sm4_cbc};
 
 // ecb encrypt

@@ -1,3 +1,7 @@
+#[cfg(feature = "alloc")]
+use alloc::{vec::Vec, vec};
+use core::panic;
+use core::convert::From;
 use crate::g3::hash::c_f;
 use crate::utils::slice::*;
 

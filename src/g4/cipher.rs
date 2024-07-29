@@ -1,3 +1,9 @@
+#[cfg(feature = "alloc")]
+use alloc::{string::String, vec::Vec, vec};
+use core::panic;
+use core::convert::From;
+use core::clone::Clone;
+
 use crate::g4::consts::{SBOX, FK, CK, ENC, DEC, SBOX0, SBOX1, SBOX2, SBOX3, BLOCKSIZE};
 use crate::utils::slice::{copy_slice};
 
@@ -108,7 +114,7 @@ pub struct Block {
 impl Block {
     pub fn new() -> Block {
         let block = Block {
-            rk: vec![]
+            rk: Vec::new()
         };
 
         block
