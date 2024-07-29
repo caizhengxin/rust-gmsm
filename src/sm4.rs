@@ -1,6 +1,5 @@
 #[cfg(feature = "alloc")]
-use alloc::{vec::Vec, vec, string::String};
-use core::clone::Clone;
+use alloc::{vec::Vec, string::String};
 use core::convert::From;
 use crate::alloc::string::ToString;
 use crate::g4::cipher::{sm4_ecb, sm4_cbc};
@@ -28,7 +27,7 @@ pub fn sm4_ecb_decrypt_byte<'a>(ins: &'a [u8], key: &'a [u8]) -> Vec<u8> {
 
 pub fn sm4_ecb_decrypt_hex<'a>(cipher: &'a str, secret_key: &'a str) -> String {
     let s = hex::decode(cipher).unwrap();
-    let key = hex::decode(secret_key.clone()).unwrap();
+    let key = hex::decode(secret_key).unwrap();
     let dec_msg = sm4_ecb_decrypt_byte(&s, &key);
 
     String::from_utf8_lossy(&dec_msg).to_string()
@@ -58,7 +57,7 @@ pub fn sm4_cbc_decrypt_byte<'a>(ins: &'a [u8], key: &'a [u8], iv: &'a [u8]) -> V
 
 pub fn sm4_cbc_decrypt_hex<'a>(cipher: &'a str, secret_key: &'a str, secret_iv: &'a str) -> String {
     let s = hex::decode(cipher).unwrap();
-    let key = hex::decode(secret_key.clone()).unwrap();
+    let key = hex::decode(secret_key).unwrap();
     let iv = hex::decode(secret_iv).unwrap();
     let dec_msg = sm4_cbc_decrypt_byte(&s, &key, &iv);
 

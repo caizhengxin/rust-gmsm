@@ -17,6 +17,19 @@ Add this to your `Cargo.toml`:
 gmsm = "0.1"
 ```
 
+no_std:
+
+```
+[dependencies]
+gmsm = { version = "0.1", default-features = false, features = ["alloc"] }
+```
+
+build:
+
+```bash
+cargo build --release --target thumbv7em-none-eabi -F alloc
+```
+
 ## Documents
 
 * SM2

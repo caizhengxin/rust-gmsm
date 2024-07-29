@@ -4,7 +4,6 @@ use alloc::{string::String, vec::Vec, vec, boxed::Box};
 use num::BigUint;
 use num::bigint::ToBigInt;
 use num_bigint_dig::{BigUint as BigUnitDig, ModInverse};
-use core::sync::{Once};
 use core::mem;
 use num::{Num, Integer, ToPrimitive, FromPrimitive, BigInt};
 use core::ops::{Shl, Shr, Add, Mul, Sub, BitAnd};
@@ -19,6 +18,7 @@ use core::cmp::Ord;
 use core::convert::From;
 use core::iter::Iterator;
 use crate::alloc::string::ToString;
+use spin::Once;
 
 
 lazy_static! {
@@ -1192,7 +1192,8 @@ fn sm2p256scalar_mult(x_out: &mut [u32; 9], y_out: &mut [u32; 9], z_out: &mut [u
 impl Sm2P256Curve {
     pub fn new() -> Sm2P256Curve {
         static mut CURVE: *const Sm2P256Curve = 0 as *const Sm2P256Curve;
-        static ONCE: Once = Once::new();
+        static ONCE: Once<()> = Once::new();
+
         unsafe {
             ONCE.call_once(|| {
                 let mut sm2_crv = Sm2P256Curve {
@@ -1217,7 +1218,8 @@ impl Sm2P256Curve {
                 sm2_crv.b = sm2p256from_big(sm2_crv.curve.b.clone().to_bigint().unwrap());
                 CURVE = mem::transmute(Box::new(sm2_crv));
             });
-            (*CURVE).clone()
+    
+            (*CURVE).clone()    
         }
     }
 

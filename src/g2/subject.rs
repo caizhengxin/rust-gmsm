@@ -7,7 +7,7 @@ use crate::utils::slice::*;
 use core::ops::{Sub, Add};
 use lazy_static::lazy_static;
 #[cfg(feature = "alloc")]
-use alloc::{string::String, vec::Vec, vec};
+use alloc::{vec::Vec, vec};
 use core::prelude::rust_2024::derive;
 use core::iter::Iterator;
 
@@ -33,7 +33,8 @@ pub struct PrivateKey {
 pub fn generate_key() -> PrivateKey {
     let c = Sm2P256Curve::new();
     let params = c.params();
-    let b: Vec<u8> = (0..BITSIZE / 8 + 8).map(|_| { rand::random::<u8>() }).collect();
+    let mut rng = oorandom::Rand32::new(4570191);
+    let b: Vec<u8> = (0..BITSIZE / 8 + 8).map(|_| { rng.rand_u32() as u8 }).collect();
     // fix random
     // b = hex::decode("b0e289d068d40ad9bc6118b2e000c05ae3af93c2e03980498ee18cd953383dbc8af051d598bd767d").unwrap();
     let mut k = BigUint::from_bytes_be(&b); // big order
@@ -102,7 +103,9 @@ pub fn bytes_to_public_key(bytes: Vec<u8>) -> PublicKey {
 }
 
 fn rand_field_element() -> BigUint {
-    let b: Vec<u8> = (0..BITSIZE / 8 + 8).map(|_| { rand::random::<u8>() }).collect();
+    let mut rng = oorandom::Rand32::new(4570191);
+    let b: Vec<u8> = (0..BITSIZE / 8 + 8).map(|_| { rng.rand_u32() as u8 }).collect();
+    // let b: Vec<u8> = (0..BITSIZE / 8 + 8).map(|_| { rand::random::<u8>() }).collect();
     // fix random
     // let b = hex::decode("eb8ba241ff968e1ff212ee55eed16e08cf4e4047325fe0907e8d555a4640a3e1917a6f6de2aaca17").unwrap();
 

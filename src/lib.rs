@@ -1,5 +1,8 @@
+
+#![no_std]
+
 #![feature(prelude_2024)]
-#![cfg_attr(feature = "internal_benches", allow(unstable_features), feature(test))]
+// #![cfg_attr(feature = "internal_benches", allow(unstable_features), feature(test))]
 #[cfg(feature = "alloc")]
 extern crate alloc;
 

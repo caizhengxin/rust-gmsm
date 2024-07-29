@@ -33,7 +33,7 @@ pub fn sm2_generate_key_hex() -> Keypair {
 
 fn s_e<'a>(plain: &'a str, pub_key: &'a str, mode: usize) -> String {
     let pub_hex_trim = pub_key.trim_start_matches("04");
-    let pub_buf = hex::decode(pub_hex_trim.clone()).unwrap();
+    let pub_buf = hex::decode(pub_hex_trim).unwrap();
     let pub_key_convert = bytes_to_public_key(pub_buf);
     let plain_buf = plain.as_bytes().to_vec();
     let cipher_buf = encrypt(pub_key_convert, plain_buf, mode);

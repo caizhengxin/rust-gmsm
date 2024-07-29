@@ -1,5 +1,5 @@
 #[cfg(feature = "alloc")]
-use alloc::{string::String, vec::Vec, vec};
+use alloc::{vec::Vec, vec};
 use core::panic;
 use core::convert::From;
 use core::clone::Clone;

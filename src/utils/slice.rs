@@ -1,10 +1,9 @@
 use core::fmt;
 use core::write;
 use core::iter::Iterator;
-use core::slice::IterMut;
 use core::result::Result::Ok;
 #[cfg(feature = "alloc")]
-use alloc::{vec::Vec, vec};
+use alloc::{vec::Vec};
 
 
 pub struct SliceDisplay<'a, T: 'a>(pub &'a [T]);
