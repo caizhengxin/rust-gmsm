@@ -1,24 +1,34 @@
 #[cfg(feature = "alloc")]
 use alloc::{string::String, vec::Vec, vec, boxed::Box};
-// use core::panic;
+#[cfg(not(feature = "std"))]
+use core::{
+    mem,
+    cmp::Ordering,
+    ops::{Shl, Shr, Add, Mul, Sub, BitAnd},
+    str::FromStr,
+    prelude::rust_2024::derive,
+    clone::Clone,
+    cmp::Ord,
+    convert::From,
+    iter::Iterator,
+};
+#[cfg(feature = "std")]
+use std::{
+    mem,
+    cmp::Ordering,
+    ops::{Shl, Shr, Add, Mul, Sub, BitAnd},
+    str::FromStr,
+};
 use num::BigUint;
 use num::bigint::ToBigInt;
 use num_bigint_dig::{BigUint as BigUnitDig, ModInverse};
-use core::mem;
 use num::{Num, Integer, ToPrimitive, FromPrimitive, BigInt};
-use core::ops::{Shl, Shr, Add, Mul, Sub, BitAnd};
-use core::cmp::Ordering;
 use lazy_static::lazy_static;
+use spin::Once;
 use crate::g2::consts::*;
 use crate::utils::slice::*;
-use core::str::FromStr;
-use core::prelude::rust_2024::derive;
-use core::clone::Clone;
-use core::cmp::Ord;
-use core::convert::From;
-use core::iter::Iterator;
+#[cfg(not(feature = "std"))]
 use crate::alloc::string::ToString;
-use spin::Once;
 
 
 lazy_static! {

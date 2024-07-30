@@ -1,12 +1,16 @@
-use core::clone::Clone;
+#[cfg(feature = "alloc")]
+use alloc::string::String;
+#[cfg(not(feature = "std"))]
+use core::{
+    clone::Clone,
+    prelude::rust_2024::derive,
+};
+#[cfg(not(feature = "std"))]
+use crate::alloc::string::ToString;
+use num::{BigUint, Num};
 use crate::g2::p256::Sm2P256Curve;
 use crate::g2::subject::*;
 use crate::g2::consts::{C1C2C3, C1C3C2};
-use num::{BigUint, Num};
-use core::prelude::rust_2024::derive;
-#[cfg(feature = "alloc")]
-use alloc::string::String;
-use crate::alloc::string::ToString;
 
 #[derive(Clone)]
 pub struct Keypair {
@@ -74,7 +78,7 @@ pub fn sm2_decrypt_c1c3c2<'a>(cipher: &'a str, pri_key: &'a str) -> String {
 }
 
 #[cfg(test)]
-mod tests {
+mod tests {    
     use super::*;
 
     #[test]

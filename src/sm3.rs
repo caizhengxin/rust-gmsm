@@ -1,5 +1,6 @@
 #[cfg(feature = "alloc")]
 use alloc::string::String;
+#[cfg(not(feature = "std"))]
 use core::convert::From;
 use crate::g3::digest::{Digest, SIZE};
 

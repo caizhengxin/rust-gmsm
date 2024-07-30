@@ -1,9 +1,14 @@
-use core::fmt;
-use core::write;
-use core::iter::Iterator;
-use core::result::Result::Ok;
+#[cfg(feature = "std")]
+use std::fmt;
+#[cfg(not(feature = "std"))]
+use core::{
+    fmt,
+    write,
+    iter::Iterator,
+    result::Result::Ok
+};
 #[cfg(feature = "alloc")]
-use alloc::{vec::Vec};
+use alloc::vec::Vec;
 
 
 pub struct SliceDisplay<'a, T: 'a>(pub &'a [T]);

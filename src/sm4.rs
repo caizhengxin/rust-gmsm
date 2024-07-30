@@ -1,6 +1,8 @@
 #[cfg(feature = "alloc")]
 use alloc::{vec::Vec, string::String};
+#[cfg(not(feature = "std"))]
 use core::convert::From;
+#[cfg(not(feature = "std"))]
 use crate::alloc::string::ToString;
 use crate::g4::cipher::{sm4_ecb, sm4_cbc};
 

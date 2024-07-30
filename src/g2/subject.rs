@@ -1,15 +1,22 @@
-use core::clone::Clone;
+#[cfg(feature = "alloc")]
+use alloc::{vec::Vec, vec};
+#[cfg(not(feature = "std"))]
+use core::{
+    clone::Clone,
+    prelude::rust_2024::derive,
+    iter::Iterator,
+    ops::{Sub, Add},
+};
+#[cfg(feature = "std")]
+use std::{
+    ops::{Sub, Add},
+};
 use num::{BigUint, FromPrimitive, Integer};
+use lazy_static::lazy_static;
 use crate::g2::p256::{Sm2P256Curve, CurveParams, CURVE_N};
 use crate::g2::consts::*;
 use crate::g3::digest::{sm3sum, Digest};
 use crate::utils::slice::*;
-use core::ops::{Sub, Add};
-use lazy_static::lazy_static;
-#[cfg(feature = "alloc")]
-use alloc::{vec::Vec, vec};
-use core::prelude::rust_2024::derive;
-use core::iter::Iterator;
 
 
 lazy_static! {

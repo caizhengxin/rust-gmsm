@@ -21,13 +21,19 @@ no_std:
 
 ```
 [dependencies]
-gmsm = { version = "0.1", default-features = false, features = ["alloc"] }
+gmsm = { version = "0", default-features = false, features = ["alloc"] }
 ```
 
 build:
 
 ```bash
-cargo build --release --target thumbv7em-none-eabi -F alloc
+cargo build --release --target thumbv7em-none-eabi --no-default-features --features alloc
+```
+
+test:
+
+```bash
+cargo test --features alloc
 ```
 
 ## Documents
