@@ -3,7 +3,7 @@ use alloc::string::String;
 #[cfg(not(feature = "std"))]
 use core::{
     clone::Clone,
-    prelude::rust_2024::derive,
+    // prelude::rust_2024::derive,
 };
 #[cfg(not(feature = "std"))]
 use crate::alloc::string::ToString;

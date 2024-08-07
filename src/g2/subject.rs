@@ -3,7 +3,7 @@ use alloc::{vec::Vec, vec};
 #[cfg(not(feature = "std"))]
 use core::{
     clone::Clone,
-    prelude::rust_2024::derive,
+    // prelude::rust_2024::derive,
     iter::Iterator,
     ops::{Sub, Add},
 };

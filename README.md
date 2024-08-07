@@ -27,7 +27,7 @@ gmsm = { version = "0", default-features = false, features = ["alloc"] }
 build:
 
 ```bash
-cargo build --release --target thumbv7em-none-eabi --no-default-features --features alloc
+cargo +nightly build --release --target thumbv7em-none-eabi --no-default-features --features alloc
 ```
 
 test:
