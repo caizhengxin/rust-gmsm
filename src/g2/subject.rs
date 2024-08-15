@@ -3,7 +3,6 @@ use alloc::{vec::Vec, vec};
 #[cfg(not(feature = "std"))]
 use core::{
     clone::Clone,
-    // prelude::rust_2024::derive,
     iter::Iterator,
     ops::{Sub, Add},
 };
@@ -11,8 +10,10 @@ use core::{
 use std::{
     ops::{Sub, Add},
 };
+use oorandom::Rand32;
 use num::{BigUint, FromPrimitive, Integer};
 use lazy_static::lazy_static;
+use spin::Mutex;
 use crate::g2::p256::{Sm2P256Curve, CurveParams, CURVE_N};
 use crate::g2::consts::*;
 use crate::g3::digest::{sm3sum, Digest};
@@ -22,7 +23,9 @@ use crate::utils::slice::*;
 lazy_static! {
     static ref ONE: BigUint = BigUint::from_u64(1).unwrap();
     static ref TWO: BigUint = BigUint::from_u64(2).unwrap();
+    static ref SEED: Mutex<Rand32> = Mutex::new(Rand32::new(4570191));
 }
+
 
 #[derive(Clone)]
 pub struct PublicKey {
@@ -40,8 +43,13 @@ pub struct PrivateKey {
 pub fn generate_key() -> PrivateKey {
     let c = Sm2P256Curve::new();
     let params = c.params();
-    let mut rng = oorandom::Rand32::new(4570191);
+    #[cfg(not(feature = "std"))]
+    // let mut rng = oorandom::Rand32::new(4570191);
+    let mut rng = SEED.lock();
+    #[cfg(not(feature = "std"))]
     let b: Vec<u8> = (0..BITSIZE / 8 + 8).map(|_| { rng.rand_u32() as u8 }).collect();
+    #[cfg(feature = "std")]
+    let b: Vec<u8> = (0..BITSIZE / 8 + 8).map(|_| { rand::random::<u8>() }).collect();
     // fix random
     // b = hex::decode("b0e289d068d40ad9bc6118b2e000c05ae3af93c2e03980498ee18cd953383dbc8af051d598bd767d").unwrap();
     let mut k = BigUint::from_bytes_be(&b); // big order
@@ -110,9 +118,28 @@ pub fn bytes_to_public_key(bytes: Vec<u8>) -> PublicKey {
 }
 
 fn rand_field_element() -> BigUint {
-    let mut rng = oorandom::Rand32::new(4570191);
+    #[cfg(not(feature = "std"))]
+    // let mut rng = oorandom::Rand32::new(4570191);
+    let mut rng = SEED.lock();
+    #[cfg(not(feature = "std"))]
     let b: Vec<u8> = (0..BITSIZE / 8 + 8).map(|_| { rng.rand_u32() as u8 }).collect();
-    // let b: Vec<u8> = (0..BITSIZE / 8 + 8).map(|_| { rand::random::<u8>() }).collect();
+    #[cfg(feature = "std")]
+    let b: Vec<u8> = (0..BITSIZE / 8 + 8).map(|_| { rand::random::<u8>() }).collect();
+    // fix random
+    // let b = hex::decode("eb8ba241ff968e1ff212ee55eed16e08cf4e4047325fe0907e8d555a4640a3e1917a6f6de2aaca17").unwrap();
+
+    let mut k = BigUint::from_bytes_be(&b);
+    let n = CURVE_N.clone().sub(ONE.clone());
+    k = k.mod_floor(&n);
+    k = k.add(ONE.clone());
+    k
+}
+
+
+#[cfg(not(feature = "std"))]
+fn rand_field_element_with_seed(seed: u64) -> BigUint {
+    let mut rng = oorandom::Rand32::new(seed);
+    let b: Vec<u8> = (0..BITSIZE / 8 + 8).map(|_| { rng.rand_u32() as u8 }).collect();
     // fix random
     // let b = hex::decode("eb8ba241ff968e1ff212ee55eed16e08cf4e4047325fe0907e8d555a4640a3e1917a6f6de2aaca17").unwrap();
 

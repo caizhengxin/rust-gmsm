@@ -12,11 +12,13 @@ readme = "README.md"
 [features]
 default = ["std"]
 alloc = []
-std = []
+std = [
+    "hex/std", "num-bigint-dig/std", "num/std",
+    "rand/std", "rand/std_rng", "rand/getrandom",
+]
 internal_benches = []
 
 [dependencies]
-panic-halt = "0.2"
 hex = { version = "0.4", default-features = false, features = ["alloc"] }
 num-bigint-dig = { version = "0.7.0", default-features = false }
 num = { version = "0.4", default-features = false, features = ["alloc"] }
